@@ -15,6 +15,9 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 	function getList() {
+		
+		$("#loaderDiv").attr("style", "display: block");
+		
 		var request = $.ajax({
 			url : "rest/employees/list",
 			type : "GET"
@@ -22,6 +25,7 @@
 
 		request.done(function(msg) {
 			console.log("Request successful!");
+			$("#loaderDiv").attr("style", "display: none");
 			$("#selectionDiv").attr("style", "display: block");
 			$("#drop").empty();
 			$("#drop").append(
@@ -35,6 +39,7 @@
 		});
 
 		request.fail(function(jqXHR, textStatus) {
+			$("#loaderDiv").attr("style", "display: none");
 			console.log("Request failed: " + textStatus);
 		});
 	}
@@ -135,19 +140,24 @@
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="row" align="center" style="color:darkblue"><h3>Hello Buddies</h3></div>
+	<div class="container" style="background-image:url(green2.jpg); background-position: center center; 
+	            background-repeat: no-repeat; background-size: cover">
+		<div class="row" align="center" style="color:darkgreen"><h3>Hello Buddies</h3></div>
 		<div class="row" align="center" style="color:gray"><h4>Let's try some RESTFul CRUDs</h4></div>
+		<div class="row" align="center" style="display: none" id="loaderDiv"><img alt="loading" src="loadinfo.gif"></div>
 		<hr>
 		<div class="row" align="center">
-			<input type="button" class="btn-primary" value="Get List" onclick="getList()">
-			<input type="button" class="btn-primary" value="Add Name" onclick="addName()">
+			<input type="button" class="btn-success" value="Get List" onclick="getList()">
+			<input type="button" class="btn-success" value="Add Name" onclick="addName()">
 		</div>
 		<hr>
 		<div class="row" style="display: none" id="selectionDiv"
-			align="center" class="btn-primary">
+			align="center" class="btn-success">
 			<select name="Employee List" id="drop" onchange="prepareEdit()"></select>
-			<input type="button" class="btn-danger" onclick="hide2()" value="Click to Hide"><br>
+			<!-- <input type="button" class="btn-danger" onclick="hide2()" value="Click to Hide"><br> -->
+			<a href="#" onclick="hide2()" style="color: red; font-size: 18px">
+          		<span class="glyphicon glyphicon-remove-sign"></span>
+        	</a> <br>
 		</div>
 		<hr>
 		<div class="row" style="display: none" id="editDiv" align="center">
@@ -158,9 +168,10 @@
 			<label>LNAME : </label>
 				<input id="editLName"><br> 
 			<label>EDIT : </label>
-				<input type="button" class="btn-primary" onclick="updateName()" value="Click to Save"><br>
+				<input type="button" class="btn-success" onclick="updateName()" value="Click to Save"><br>
 			<label>DELETE : </label>
-				<input type="button" class="btn-primary" onclick="deleteName()" value="Click to Delete"><br>
+				<input type="button" class="btn-success" onclick="deleteName()" value="Click to Delete"><br>
+				<!-- option to use for using hidden variable as local storage -->
 			<input type="text" style="display: none" id="storageInput">
 		</div>
 		<hr>
@@ -170,8 +181,11 @@
 			<label>LNAME :</label>
 				<input id="addLName"><br> 
 			<label>ADD : </label>
-				<input type="button" class="btn-primary" onclick="add()" value="Click to Add"><br>
-			<input type="button" class="btn-danger" onclick="hide()" value="Click to Hide"><br>
+				<input type="button" class="btn-success" onclick="add()" value="Click to Add">
+			<!-- <input type="button" class="btn-danger" onclick="hide()" value="Click to Hide"><br> -->
+			<a href="#" onclick="hide()" style="color: red; font-size: 18px">
+          		<span class="glyphicon glyphicon-remove-sign"></span>
+        	</a> <br>
 		</div>
 	</div>
 </body>
